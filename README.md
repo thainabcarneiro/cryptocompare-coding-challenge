@@ -46,3 +46,7 @@
 ### Database model
 
 ![](https://github.com/thainabcarneiro/cryptocompare-coding-challenge/blob/master/sql_resources/EER.png)
+
+## Kanban board
+  - https://trello.com/b/jVnYHB2m/cryptocompare-coding-challenge
+

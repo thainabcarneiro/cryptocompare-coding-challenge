@@ -5,5 +5,6 @@ setup(
     packages=['util', 'entity'],
     author='Thainá Batista',
     author_email='thainabcarneiro@gmail.com',
-    description='CryptoCompare.com API coding challenge'
+    description='CryptoCompare.com API coding challenge',
+    install_requires=['requests', 'mysql', 'pytz']
 )

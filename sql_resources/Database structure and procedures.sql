@@ -325,7 +325,7 @@ BEGIN
     SET _minute = 0;
     SET _second = 0;
     
-	WHILE _hour <= 23
+    WHILE _hour <= 23
     DO
     
         SET _time          = CONCAT(_hour, ':', _minute, ':', _second);

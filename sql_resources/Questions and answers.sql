@@ -4,7 +4,7 @@
 */
 SELECT
     a.id_dim_coin,
-    (close-open) AS revenue,
+    (close - open) AS revenue,
     c.coin_name
 FROM (
         SELECT
@@ -19,8 +19,8 @@ FROM (
             t.id_dim_time = fc.id_dim_time
         )
         WHERE
-                d.month = 1
-            AND d.year  = 2018
+                d.year  = 2018
+            AND d.month = 1
             AND d.day   = 1
             AND t.id_dim_time = 1
 ) AS a
@@ -37,8 +37,8 @@ LEFT JOIN (
                 t.id_dim_time = fc.id_dim_time
             )
             WHERE
-                    d.month = 12
-                AND d.year  = 2018
+                    d.year  = 2018
+                AND d.month = 12
                 AND d.day   = 31
                 AND t.id_dim_time = 24
 ) AS b ON (
@@ -55,7 +55,7 @@ LEFT JOIN dim_coin c ON (
 */
 SELECT
     a.id_dim_coin,
-    (close-open) AS revenue,
+    (close - open) AS revenue,
     c.coin_name
 FROM (
         SELECT
@@ -70,8 +70,8 @@ FROM (
             t.id_dim_time = fc.id_dim_time
         )
         WHERE
-                d.month = 1
-            AND d.year  = 2019
+                d.year  = 2019
+            AND d.month = 1
             AND d.day   = 1
             AND t.id_dim_time = 1
 ) AS a
@@ -88,8 +88,8 @@ LEFT JOIN (
                 t.id_dim_time = fc.id_dim_time
             )
             WHERE
-                    d.month = 2
-                AND d.year  = 2019
+                    d.year  = 2019
+                AND d.month = 2
                 AND d.day   = 9
                 AND t.id_dim_time = 24
 ) AS b ON (
@@ -116,7 +116,7 @@ WHERE
     Obs: Dias consecutivos não realizado
 */
 SELECT
-    SUM(IF(close-open > 0, 1, 0)) AS days,
+    SUM(IF(close - open > 0, 1, 0)) AS days,
     d.month
 FROM (
     SELECT
@@ -149,7 +149,7 @@ LEFT JOIN dim_date d ON (
 )
 WHERE
         c.coin_name = 'Bitcoin'
-    AND d.year =2018 
+    AND d.year      = 2018 
 GROUP BY
     d.month
 ORDER BY
@@ -175,8 +175,8 @@ LEFT JOIN dim_coin c ON (
     c.id_dim_coin = fc.id_dim_coin
 )
 WHERE
-        d.month     = 1
-    AND d.year      = 2019
+        d.year      = 2019
+    AND d.month     = 1
     AND c.coin_name = 'Bitcoin'
 GROUP BY
     t.time,
@@ -190,8 +190,9 @@ LIMIT 1;
     Quais são as top 3 exchanges em volume de transações em: Janeiro de 2019, Janeiro de 2018 e Janeiro de 2017?
 */
 SELECT
-    SUM(volume),
-    e.name
+	d.year,
+    e.name,
+    SUM(volume)    
 FROM
     fact_exchange AS fc
 LEFT JOIN dim_date AS d ON (
@@ -201,10 +202,10 @@ INNER JOIN dim_exchange AS e ON (
     e.id_dim_exchange = fc.id_dim_exchange
 )
 WHERE
-        d.month = 1
-    AND d.year  = 2019
+        d.year  = 2019
+    AND d.month = 1
 GROUP BY
-    2
+    1, 2
 ORDER BY
     1 DESC
 LIMIT 3;

@@ -34,7 +34,7 @@ def get_exchanges():
 
     exchanges = []
     for value in data:
-        # Builds the "Exchange" object
+        # Builds the "Exchange" object from the response, and appends to the exchange list
         exchanges.append(
             Exchange(
                 value[0],  # id_dim_exchange
@@ -47,30 +47,6 @@ def get_exchanges():
         )
 
     return exchanges
-
-
-def get_id_dim_date(date):
-    prepared_stmt = 'SELECT id_dim_date FROM dim_date WHERE date = DATE(%s)'
-    parameter = [date]
-
-    con = Database().connect()
-    cursor = con.cursor()
-    cursor.execute(prepared_stmt, parameter)
-    data = cursor.fetchone()
-
-    return data[0] if len(data) else None
-
-
-def get_id_dim_time(time):
-    prepared_stmt = 'SELECT id_dim_time FROM dim_time WHERE time = %s'
-    parameter = [time]
-
-    con = Database().connect()
-    cursor = con.cursor()
-    cursor.execute(prepared_stmt, parameter)
-    data = cursor.fetchone()
-
-    return data[0] if len(data) else None
 
 
 def request_api_histoday(start_date, exchanges):
@@ -108,7 +84,7 @@ def request_api_histoday(start_date, exchanges):
             # Queries the database to get the "Date" dimension ID
             id_dim_date = get_id_dim_date(date_transaction)
 
-            # Builds the "Transaction" object
+            # Builds the "Transaction" object from the response, and appends to the transactions list
             transactions.append(
                 Transaction(
                     id_dim_date,
@@ -118,9 +94,23 @@ def request_api_histoday(start_date, exchanges):
                 )
             )
 
-        # Persist the data
+        # Save the transaction elements to the database
         save_data(transactions)
+
+        # Sleeps 2s to avoid DoS, then continues
         time.sleep(2)
+
+
+def get_id_dim_date(date):
+    prepared_stmt = 'SELECT id_dim_date FROM dim_date WHERE date = DATE(%s)'
+    parameter = [date]
+
+    con = Database().connect()
+    cursor = con.cursor()
+    cursor.execute(prepared_stmt, parameter)
+    data = cursor.fetchone()
+
+    return data[0] if len(data) else None
 
 
 def save_data(elements):

@@ -30,7 +30,7 @@ def request_api_coinlist():
 
     coins = []
     for value in data['Data'].values():
-        # Builds the "Coin" object
+        # Builds the "Coin" object from the response, and appends to the coin list
         coins.append(
             Coin(
                 value['Id'],
@@ -41,6 +41,7 @@ def request_api_coinlist():
             )
         )
 
+    # Save the coin elements to the database
     save_data(coins)
 
 

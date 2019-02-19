@@ -30,7 +30,7 @@ def request_api_exchanges():
 
     exchanges = []
     for value in data['Data'].values():
-        # Builds the "Exchange" object
+        # Builds the "Exchange" object from the response, and appends to the exchange list
         exchanges.append(
             Exchange(
                 value['Id'],
@@ -42,7 +42,7 @@ def request_api_exchanges():
             )
         )
 
-    # Save the exchanges elements to the database
+    # Save the exchange elements to the database
     save_data(exchanges)
 
 

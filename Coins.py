@@ -3,6 +3,7 @@ import requests
 
 from entity.Coin import Coin
 from util.Database import Database
+from util.EnvVariable import EnvVariable as EnvVar
 
 # Sets up the instance of the logger object
 logging.basicConfig(
@@ -19,7 +20,7 @@ def main():
 def request_api_coinlist():
     url = 'https://min-api.cryptocompare.com/data/all/coinlist'
     header = {
-        'authorization': "Apikey 34ce19ee730f1d0b27769cbd0a4da96cec7e269e138bb8b07df5aae371f317b9"
+        'authorization': 'Apikey {}'.format(EnvVar.api_key)
     }
 
     logging.debug('Requesting API = ' + url)

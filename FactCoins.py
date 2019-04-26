@@ -6,6 +6,7 @@ from datetime import datetime
 from datetime import timedelta
 from util.Database import Database
 from entity.FactCoin import FactCoin
+from util.EnvVariable import EnvVariable as EnvVar
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -44,7 +45,7 @@ def request_api_histohour(start_date, end_date, coin):
 
     base_url = 'https://min-api.cryptocompare.com/data/histohour?tsym=USD&limit=23&toTs='
     header = {
-        'authorization': "Apikey 34ce19ee730f1d0b27769cbd0a4da96cec7e269e138bb8b07df5aae371f317b9"
+        'authorization': 'Apikey {}'.format(EnvVar.api_key)
     }
 
     while actual_date < end_date:

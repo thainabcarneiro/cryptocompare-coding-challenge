@@ -7,6 +7,7 @@ from datetime import datetime
 from util.Database import Database
 from entity.Exchange import Exchange
 from entity.Transaction import Transaction
+from util.EnvVariable import EnvVariable as EnvVar
 
 # Sets up the instance of the logger object
 logging.basicConfig(
@@ -42,7 +43,7 @@ def get_exchanges():
                 None,
                 None,
                 None,
-                value[1]   # internal_name
+                value[1]  # internal_name
             )
         )
 
@@ -56,7 +57,7 @@ def request_api_histoday(start_date, exchanges):
 
     base_url = 'https://min-api.cryptocompare.com/data/exchange/histoday?tsym=USD&limit=' + str(number_of_days)
     header = {
-        'authorization': "Apikey 34ce19ee730f1d0b27769cbd0a4da96cec7e269e138bb8b07df5aae371f317b9"
+        'authorization': 'Apikey {}'.format(EnvVar.api_key)
     }
 
     local_tz = pytz.timezone('America/Sao_Paulo')
